@@ -5,7 +5,8 @@ const loadCategory = () => {
     .then((data) => {
       showCategory(data.categories);
       loadPlants();
-    });
+    })
+    .catch(err => console.error(err));
 };
 const showCategory = (categories) => {
   const categoryContainer = document.getElementById("category-container");
@@ -20,14 +21,16 @@ const loadPlants = () => {
   const url = "https://openapi.programming-hero.com/api/plants";
   fetch(url)
     .then((res) => res.json())
-    .then((data) => showPlants(data.plants));
+    .then((data) => showPlants(data.plants))
+    .catch(err => console.error(err));
 };
 const showPlants = (plants) => {
   const plantContainer = document.getElementById("plant-container");
+  plantContainer.innerHTML = "";
   plants.forEach((plant) => {
     const div = document.createElement("div");
     div.innerHTML = `<div class="rounded-md bg-white p-3 h-full flex flex-col justify-between gap-2">
-                        <div><img src="${plant.image}" alt="" class="rounded-md w-full h-[150px]"></div>
+                        <div><img src="${plant.image}" class="rounded-md w-full h-[150px] object-cover"></div>
                         <div class="text-xl font-bold">${plant.name}</div>
                         <div class="text-sm">${plant.description}</div>
                         <div class="flex justify-between items-center font-bold">
@@ -100,11 +103,10 @@ const totalCartPrice = (totalCart) => {
     const itemPrice = price * quantity;
     total += itemPrice;
   });
-  totalPrice.innerText = total;
+  totalPrice.innerText = total.toFixed(2);
 };
 
 const removeItem = (id) => {
-  const allXBtn = document.querySelectorAll(".cutItemFormCart");
   const filterItem = cartHistory.filter((cart) => cart.id !== id);
   cartHistory = filterItem;
   showCartItem(cartHistory);
