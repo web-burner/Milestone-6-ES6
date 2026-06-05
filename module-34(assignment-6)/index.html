@@ -27,14 +27,23 @@
                             onclick="plantShowByCategory(0)" id="categoryBtn-0">All Plants</div>
                     </div>
                 </div>
-                <div class="col-span-3">
+                <div class="col-span-3 h-dvh overflow-y-scroll">
                     <div id="plant-container" class="grid grid-cols-3 grid-rows-10 gap-4">
 
                     </div>
                 </div>
-                <div id="cart-container" class="col-span-1 bg-white h-dvh rounded-md">
-                    <div><p>Your Cart</p></div>
-                    <div id="cart-items"></div>
+                <div id="cart-container" class="col-span-1 bg-white h-dvh rounded-md p-2">
+                    <div>
+                        <p class="text-xl font-semibold">Your Cart</p>
+                    </div>
+                    <div id="cart-items" class="p-2 space-y-2 border-b border-gray-200">
+                        
+                        
+
+                    </div>
+                    <div>
+                        <p>Total: <span id="total-price">0</span> tk</p>
+                    </div>
                 </div>
             </div>
         </div>

@@ -26,12 +26,12 @@ const showPlants = (plants) => {
   const plantContainer = document.getElementById("plant-container");
   plants.forEach((plant) => {
     const div = document.createElement("div");
-    div.innerHTML = `<div class="rounded-md bg-white p-3 h-full flex flex-col justify-between">
+    div.innerHTML = `<div class="rounded-md bg-white p-3 h-full flex flex-col justify-between gap-2">
                         <div><img src="${plant.image}" alt="" class="rounded-md w-full h-[150px]"></div>
                         <div class="text-xl font-bold">${plant.name}</div>
                         <div class="text-sm">${plant.description}</div>
                         <div class="flex justify-between items-center font-bold">
-                            <p class="bg-green-100  text-green-700 px-3 py-2 rounded-full">${plant.category}</p>
+                            <p class="bg-green-100  text-green-700 px-3 py-1 rounded-full">${plant.category}</p>
                             <p>$<span>${plant.price}</span></p>
                         </div>
                         <button class="bg-green-800 text-white w-full px-3 py-2 rounded-md" onclick="addToCart('${plant.name}',${plant.price},${plant.id})">Add to Cart</button>
@@ -62,22 +62,52 @@ const activeBtn = (id) => {
     .getElementById(`categoryBtn-${id}`)
     .classList.add("bg-green-800", "text-white");
 };
+let cartHistory = [];
+const showCartItem = (items) => {
+  const cartContainer = document.getElementById("cart-items");
+  cartContainer.innerHTML = "";
+  items.forEach((item) => {
+    const { name, price, id, quantity } = item;
+    const div = document.createElement("div");
+    div.innerHTML = `<div class="p-2 bg-green-100 flex justify-between items-center rounded-md">
+                            <div class="text-sm">
+                                <p class="font-semibold">${name}</p>
+                                <p class="text-gray-500"><span>${price}</span> x <span>${quantity}</span></p>
+                            </div>
+                            <div>
+                                <button onclick="removeItem(${id})" class="cutItemFormCart p-3 text-lg font-bold">X</button>
+                            </div>
+                        </div>`;
+    cartContainer.append(div);
+  });
+  totalCartPrice(items);
+};
 
-const cartHistory = [];
 const addToCart = (name, price, id) => {
-    const exist = cartHistory.find(cart => cart.id === id)
-    if(!exist){
-        cartHistory.unshift({ name: name, price: price, id: id , quantity:1 })
-    }else{
-        exist.quantity += 1;
-    }
-  console.log(cartHistory)
+  const exist = cartHistory.find((cart) => cart.id === id);
+  if (!exist) {
+    cartHistory.unshift({ name: name, price: price, id: id, quantity: 1 });
+  } else {
+    exist.quantity += 1;
+  }
+  showCartItem(cartHistory);
+};
+const totalCartPrice = (totalCart) => {
+  const totalPrice = document.getElementById("total-price");
+  let total = 0;
+  totalCart.forEach((cart) => {
+    const { price, quantity } = cart;
+    const itemPrice = price * quantity;
+    total += itemPrice;
+  });
+  totalPrice.innerText = total;
+};
+
+const removeItem = (id) => {
+  const allXBtn = document.querySelectorAll(".cutItemFormCart");
+  const filterItem = cartHistory.filter((cart) => cart.id !== id);
+  cartHistory = filterItem;
+  showCartItem(cartHistory);
 };
 
 loadCategory();
-// category: "Fruit Tree";
-// description: "A fast-growing tropical tree that produces delicious, juicy mangoes during summer. Its dense green canopy offers shade, while its sweet fruits are rich in vitamins and minerals.";
-// id: 1;
-// image: "https://i.ibb.co.com/cSQdg7tf/mango-min.jpg";
-// name: "Mango Tree";
-// price: 500;
