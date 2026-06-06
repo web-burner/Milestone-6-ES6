@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body>
+    <section>
+        <nav></nav>
+        <section>
+            <!-- banner -->
+        </section>
+    </section>
+    <section class=" bg-green-100">
+        <!-- plant section  -->
+
+        <div class="w-11/12 mx-auto py-5">
+            <div class="grid grid-cols-5 gap-5">
+                <div class="col-span-1 flex">
+                    <div id="category-container" class="flex flex-col gap-3">
+                        <div class="category-btn  rounded-md p-1 hover:bg-green-800 hover:text-white bg-green-800 text-white"
+                            onclick="plantShowByCategory(0)" id="categoryBtn-0">All Plants</div>
+                    </div>
+                </div>
+                <div class="col-span-3 h-dvh overflow-y-scroll">
+                    <div id="plant-container" class="grid grid-cols-3 grid-rows-10 gap-4">
+
+                    </div>
+                </div>
+                <div id="cart-container" class="col-span-1 bg-white h-dvh rounded-md p-2">
+                    <div>
+                        <p class="text-xl font-semibold">Your Cart</p>
+                    </div>
+                    <div id="cart-items" class="p-2 space-y-2 border-b border-gray-200">
+                        
+                        
+
+                    </div>
+                    <div>
+                        <p>Total: <span id="total-price">0</span> tk</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+
+
+
+    <script src="script.js"></script>
+</body>
+
+</html>
