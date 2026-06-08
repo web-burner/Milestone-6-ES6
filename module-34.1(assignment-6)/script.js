@@ -3,10 +3,12 @@ const loadCategory = () => {
   fetch(url)
     .then((res) => res.json())
     .then((data) => {
+        loadSpinner(true);
+
       showCategory(data.categories);
       loadPlants();
     })
-    .catch(err => console.error(err));
+    .catch((err) => console.error(err));
 };
 const showCategory = (categories) => {
   const categoryContainer = document.getElementById("category-container");
@@ -22,7 +24,7 @@ const loadPlants = () => {
   fetch(url)
     .then((res) => res.json())
     .then((data) => showPlants(data.plants))
-    .catch(err => console.error(err));
+    .catch((err) => console.error(err));
 };
 const showPlants = (plants) => {
   const plantContainer = document.getElementById("plant-container");
@@ -30,7 +32,7 @@ const showPlants = (plants) => {
   plants.forEach((plant) => {
     const div = document.createElement("div");
     div.innerHTML = `<div class="rounded-md bg-white p-3 h-full flex flex-col justify-between gap-2">
-                        <div><img src="${plant.image}" class="rounded-md w-full h-[150px] object-cover"></div>
+                        <div><img src="${plant.image}" class="rounded-md w-full h-[150px] object-cover" alt="${plant.name} image"></div>
                         <div class="text-xl font-bold">${plant.name}</div>
                         <div class="text-sm">${plant.description}</div>
                         <div class="flex justify-between items-center font-bold">
@@ -41,6 +43,8 @@ const showPlants = (plants) => {
                     </div>`;
     plantContainer.append(div);
   });
+    loadSpinner(false);
+
 };
 
 const plantShowByCategory = (id) => {
@@ -110,6 +114,15 @@ const removeItem = (id) => {
   const filterItem = cartHistory.filter((cart) => cart.id !== id);
   cartHistory = filterItem;
   showCartItem(cartHistory);
+};
+
+const loadSpinner = (status) => {
+  if (status === true) {
+    document.getElementById("spinner").classList.remove("hidden");
+  }else{
+     document.getElementById("AllPlants").classList.remove("hidden");
+     document.getElementById("spinner").classList.add("hidden");
+  }
 };
 
 loadCategory();
